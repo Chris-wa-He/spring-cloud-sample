@@ -2,6 +2,7 @@ package com.chris.feign.controller;
 
 import com.chris.feign.domain.User;
 import com.chris.feign.service.HelloService;
+import com.chris.feign.service.RefactorHelloService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +13,9 @@ public class ConsumerController {
 
     @Autowired
     private HelloService helloService;
+
+    @Autowired
+    private RefactorHelloService refactorHelloService;
 
     @RequestMapping(value = "/feign-consumer", method = RequestMethod.GET)
     public String helloConsumer() {
@@ -29,4 +33,13 @@ public class ConsumerController {
         return StrBuil.toString();
     }
 
+    @RequestMapping(value = "/feign-consumer3", method = RequestMethod.GET)
+    public String refactorHelloUserConsumer() {
+
+        StringBuilder StrBuil = new StringBuilder();
+        StrBuil.append(refactorHelloService.helloName("Iron Man")).append("\n");
+        StrBuil.append(refactorHelloService.helloUserObj("Iron Man", 40)).append("\n");
+        StrBuil.append(refactorHelloService.helloUserStr(new com.chris.helloservice.api.dto.User("Iron Man", 40))).append("\n");
+        return StrBuil.toString();
+    }
 }
