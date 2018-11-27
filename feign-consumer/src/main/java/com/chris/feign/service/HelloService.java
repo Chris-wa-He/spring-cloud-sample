@@ -1,10 +1,11 @@
 package com.chris.feign.service;
 
 import com.chris.feign.domain.User;
+import com.chris.feign.service.impl.HelloServiceFallBack;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient("hello-service")
+@FeignClient(value = "hello-service",fallback = HelloServiceFallBack.class)
 public interface HelloService {
 
     @RequestMapping("/hello")
@@ -14,7 +15,7 @@ public interface HelloService {
     String helloName(@RequestParam("name") String name);
 
     @RequestMapping(value = "/helloUserObj", method = RequestMethod.GET)
-    String helloUserObj(@RequestHeader("name") String name, @RequestHeader("age") Integer age);
+    User helloUserObj(@RequestHeader("name") String name, @RequestHeader("age") Integer age);
 
     @RequestMapping(value = "/helloUserStr", method = RequestMethod.POST)
     String helloUserStr(@RequestBody User user);
