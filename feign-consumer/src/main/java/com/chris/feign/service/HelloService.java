@@ -1,11 +1,12 @@
 package com.chris.feign.service;
 
+import com.chris.feign.config.FullLogConfig;
 import com.chris.feign.domain.User;
 import com.chris.feign.service.impl.HelloServiceFallBack;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(value = "hello-service",fallback = HelloServiceFallBack.class)
+@FeignClient(value = "hello-service", fallback = HelloServiceFallBack.class, configuration = FullLogConfig.class)
 public interface HelloService {
 
     @RequestMapping("/hello")
